@@ -70,7 +70,6 @@ class SeedValues:
     github_token_field = "github.accounts.sh.users.sh.secrets.dev.value"
     codecov_token_field = "codecov_io.accounts.sh.users.sh.secrets.dev.value"
     readthedocs_token_field = "readthedocs.accounts.sh.users.sh.secrets.dev.value"
-    pypi_token_field = "pypi.accounts.sh.token"
 
 
 _parts = SeedValues.version.split(".")
@@ -224,12 +223,6 @@ PARAMETERS = [
         default="your_readthedocs_token_field",
         prompt=f"Readthedocs.org token field. {_HOME_SECRET_HELP}",
     ),
-    Parameter(
-        selector=[SeedValues.pypi_token_field],
-        name="pypi_token_field",
-        default="your_pypi_token_field",
-        prompt=f"PyPI token field. {_HOME_SECRET_HELP}",
-    ),
 ]
 
 # Git-visible seed files that must not enter the template.
@@ -278,7 +271,6 @@ UNIQUE_SEED_VALUES = {
     "github_token_field": SeedValues.github_token_field,
     "codecov_token_field": SeedValues.codecov_token_field,
     "readthedocs_token_field": SeedValues.readthedocs_token_field,
-    "pypi_token_field": SeedValues.pypi_token_field,
 }
 
 _SEED_LINK = "links to the seed repo as the reference implementation, must stay literal"

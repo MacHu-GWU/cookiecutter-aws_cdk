@@ -87,7 +87,6 @@ Documentation = "https://{{ cookiecutter.package_name | slugify }}.readthedocs.i
 Repository = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.package_name }}-project"
 Issues = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.package_name }}-project/issues"
 Changelog = "https://github.com/{{ cookiecutter.github_username }}/{{ cookiecutter.package_name }}-project/blob/main/release-history.rst"
-Download = "https://pypi.org/pypi/{{ cookiecutter.package_name | slugify }}#files"
 
 # Read: https://packaging.python.org/en/latest/guides/writing-pyproject-toml/#creating-executable-scripts
 [project.scripts]
