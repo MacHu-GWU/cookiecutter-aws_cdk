@@ -255,6 +255,12 @@ CHOICE_COVERAGE = [
 # allows them to differ from the seed.
 HOOK_OUTPUTS = [
     "LICENSE.txt",  # hooks/post_gen_project.py writes it from the chosen license
+    # hooks/post_gen_project.py copies these from their examples; git-ignored in the seed
+    ".env",
+    "config/config-shared-secret.json5",
+    "config/config-dev-secret.json5",
+    "config/config-tst-secret.json5",
+    "config/config-prd-secret.json5",
 ]
 
 # Seed values unique enough that any occurrence left in the template is a

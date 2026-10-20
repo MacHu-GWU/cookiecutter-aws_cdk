@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import shutil
 from pathlib import Path
 
 dir_project_root = Path.cwd()
@@ -716,3 +717,35 @@ license_mapping = {
 path_license = dir_project_root.joinpath("LICENSE.txt")
 license_content = license_mapping[license]
 path_license.write_text(license_content, encoding="utf-8")
+
+# Local, per-person settings, git-ignored in the generated project: copy each
+# example once so the project is ready to fill in. Keep in sync with
+# HOOK_OUTPUTS in .mise/tasks/make_template.py.
+local_files = {
+    ".env": ".env.example",
+    "config/config-shared-secret.json5": "config/example/config-shared-secret.json5.example",
+    "config/config-dev-secret.json5": "config/example/config-dev-secret.json5.example",
+    "config/config-tst-secret.json5": "config/example/config-dev-secret.json5.example",
+    "config/config-prd-secret.json5": "config/example/config-dev-secret.json5.example",
+}
+for dst, src in local_files.items():
+    path_dst = dir_project_root.joinpath(dst)
+    if not path_dst.exists():
+        shutil.copyfile(dir_project_root.joinpath(src), path_dst)
+
+files = "\n".join(f"   - {dst}" for dst in local_files)
+print(f"""
+Project created at {dir_project_root}
+
+Next steps:
+
+1. Fill in real values in these files, copied from their examples
+   (git-ignored, they never enter the repo):
+{files}
+
+2. Move the folder where you want it (optionally 'git init' there), then:
+
+   cd {dir_project_root.name}
+   mise run cov                      # run the unit tests
+   mise run cdk-up-dev-alerts-stack  # deploy the alerts stack to dev
+""")
