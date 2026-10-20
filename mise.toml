@@ -1,0 +1,92 @@
+# See claude code environment variables documents at https://code.claude.com/docs/en/settings
+[env]
+# Only publish-template needs it; '|| true' keeps every other task working
+# without the secret (publish-template fails early if it is empty).
+GITHUB_TOKEN = "{{ exec(command='uvx --from home-secret-toml hst get github.accounts.sh.users.sh.secrets.dev.value || true') }}"
+# The seed repo this template is made from. Keep in sync with permissions.additionalDirectories in .claude/settings.json
+CCTPL_SEED_DIR = "{{env.HOME}}/Documents/GitHub/cookiecutter_pywf_open_source_demo-project"
+
+[tools]
+python = "3.12"
+uv = "latest"
+claude = "latest"
+
+# === Tasks ===
+# Python Environment Management
+[tasks.venv-create]
+description = "Create Python virtual environment using uv (creates .venv directory)"
+run = "uv venv --allow-existing"
+
+[tasks.venv-remove]
+description = "Remove Python virtual environment (deletes .venv directory)"
+run = "rm -r .venv"
+
+# Dependency Management
+[tasks.inst]
+description = "Install all Python dependencies using uv (syncs from pyproject.toml and uv.lock)"
+depends = ["venv-create"]
+run = "uv sync --all-extras"
+
+[tasks.make-template]
+description = "Convert the seed project into a cookiecutter template"
+run = ".venv/bin/python .mise/tasks/make_template.py"
+depends = ["inst"]
+
+[tasks.check-seed-values]
+description = "Check if the generated template still contains residual seed project values"
+run = ".venv/bin/python .mise/tasks/check_seed_values.py"
+depends = ["inst"]
+
+[tasks.test-template]
+description = "Generate projects from the template with default values, plus one per extra value of each covered choice variable"
+depends = ["inst"]
+run = ".venv/bin/python .mise/tasks/test_template.py"
+
+[tasks.check-output]
+description = "Check if the generated output still contains unresolved cookiecutter placeholders"
+run = ".venv/bin/python .mise/tasks/check_output.py"
+
+[tasks.check-roundtrip]
+description = "Render the template with the seed's own values and compare the result with the seed"
+run = ".venv/bin/python .mise/tasks/check_roundtrip.py"
+
+[tasks.check-presets]
+description = "Check presets/*.json against the generated cookiecutter.json"
+run = ".venv/bin/python .mise/tasks/check_presets.py"
+
+[tasks.test-output]
+description = "Install and test the default-value generated project with uv and pytest (no secrets needed); slow, not part of sync"
+depends = ["inst"]
+run = ".venv/bin/python .mise/tasks/test_output.py"
+
+[tasks.apply-template]
+description = "Replace cookiecutter.json and the template dir in the repo root with the generated ones"
+depends = ["inst"]
+run = ".venv/bin/python .mise/tasks/apply_template.py"
+
+[tasks.sync]
+description = "Make the template, run all checks, and apply the artifacts; stops at the first failure"
+run = [
+    "mise run make-template",
+    "mise run check-seed-values",
+    "mise run test-template",
+    "mise run check-output",
+    "mise run check-roundtrip",
+    "mise run check-presets",
+    "mise run apply-template",
+]
+
+[tasks.try-template]
+description = "Local trial: make the template, render a project (optionally with a preset: 'mise run try-template sanhe'), then run its venv-create, inst, cov, build-doc through mise, logging every step"
+depends = ["inst"]
+run = ".venv/bin/python .mise/tasks/try_template.py"
+
+[tasks.verify-release]
+description = "Verify the template published on GitHub: generate main and preset branches, compare with local, run tests (read-only)"
+depends = ["inst"]
+run = ".venv/bin/python .mise/tasks/verify_release.py"
+
+[tasks.publish-template]
+description = "USER ONLY. Publish: commit and push main, regenerate preset/* branches from presets/*.json, create the GitHub release"
+run = ".venv/bin/python .mise/tasks/publish_template.py"
+depends = ["inst"]
