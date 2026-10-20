@@ -79,7 +79,7 @@ Built from seed @ ``e988252``
 
 - AI-first template: Claude Code takes over as the primary development assistant
 - All tooling managed by ``mise``: Python, uv, and Claude are all ``mise``-managed
-- Replaced ``make`` with ``mise tasks`` for all automation; no longer depends on ``pywf_open_source`` library for shell command wrapping
+- Replaced ``make`` with ``mise tasks`` for all automation; no longer depends on ``aws_cdk`` library for shell command wrapping
 - Upgraded all dependencies to latest versions
 - Updated GitHub Actions workflows to latest versions as of 2026-01
 
@@ -89,4 +89,4 @@ Built from seed @ ``e988252``
 **Features and Improvements**
 
 - First Release
-- Use ``pywf_open_source as the automation engine
+- Use ``aws_cdk as the automation engine

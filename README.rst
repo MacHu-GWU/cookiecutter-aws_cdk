@@ -2,13 +2,13 @@
    apply-template (mise run sync) renders it from this file.
 
 .. image:: https://img.shields.io/badge/Release_History!--None.svg?style=social
-    :target: https://github.com/MacHu-GWU/cookiecutter-pywf_open_source/blob/main/release-history.rst
+    :target: https://github.com/MacHu-GWU/cookiecutter-aws_cdk/blob/main/release-history.rst
 
 .. image:: https://img.shields.io/badge/STAR_Me_on_GitHub!--None.svg?style=social
-    :target: https://github.com/MacHu-GWU/cookiecutter-pywf_open_source
+    :target: https://github.com/MacHu-GWU/cookiecutter-aws_cdk
 
 
-``cookiecutter-pywf_open_source``
+``cookiecutter-aws_cdk``
 ==============================================================================
 
 
@@ -36,19 +36,19 @@ Enter the following command to use the latest template version:
 
 .. code-block:: bash
 
-    pip install "cookiecutter>=2.6.0,<3.0.0" && cookiecutter https://github.com/MacHu-GWU/cookiecutter-pywf_open_source
+    pip install "cookiecutter>=2.6.0,<3.0.0" && cookiecutter https://github.com/MacHu-GWU/cookiecutter-aws_cdk
 
-To use a specific released version (see the `full list of releases <https://github.com/MacHu-GWU/cookiecutter-pywf_open_source/releases>`_):
+To use a specific released version (see the `full list of releases <https://github.com/MacHu-GWU/cookiecutter-aws_cdk/releases>`_):
 
 .. code-block:: bash
 
-    cookiecutter https://github.com/MacHu-GWU/cookiecutter-pywf_open_source --checkout tags/${version}
+    cookiecutter https://github.com/MacHu-GWU/cookiecutter-aws_cdk --checkout tags/${version}
 
 For example, to use ``2.0.0``, the latest version:
 
 .. code-block:: bash
 
-    cookiecutter https://github.com/MacHu-GWU/cookiecutter-pywf_open_source --checkout tags/2.0.0
+    cookiecutter https://github.com/MacHu-GWU/cookiecutter-aws_cdk --checkout tags/2.0.0
 
 You'll then be prompted to provide the following information (defaults in parentheses):
 
@@ -70,7 +70,7 @@ You'll then be prompted to provide the following information (defaults in parent
     [10/11] Readthedocs.org token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_readthedocs_token_field): your_readthedocs_token_field
     [11/11] PyPI token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_pypi_token_field): your_pypi_token_field
 
-This will generate a repository structure similar to `cookiecutter_pywf_open_source_demo-project <https://github.com/MacHu-GWU/cookiecutter_pywf_open_source_demo-project>`_.
+This will generate a repository structure similar to `cookiecutter_aws_cdk-project <https://github.com/MacHu-GWU/cookiecutter_aws_cdk-project>`_.
 
 Once generated, navigate to your project directory and explore the available automation tasks:
 
@@ -84,14 +84,14 @@ Project Maintainer Note
 ------------------------------------------------------------------------------
 **Project Architecture:**
 
-- **Seed Repository**: `cookiecutter_pywf_open_source_demo-project <https://github.com/MacHu-GWU/cookiecutter_pywf_open_source_demo-project>`_ - A concrete, runnable project used as the source for template generation
-- **Cookiecutter Template**: `cookiecutter-pywf_open_source <https://github.com/MacHu-GWU/cookiecutter-pywf_open_source>`_ - This repository
+- **Seed Repository**: `cookiecutter_aws_cdk-project <https://github.com/MacHu-GWU/cookiecutter_aws_cdk-project>`_ - A concrete, runnable project used as the source for template generation
+- **Cookiecutter Template**: `cookiecutter-aws_cdk <https://github.com/MacHu-GWU/cookiecutter-aws_cdk>`_ - This repository
 
 **Maintenance Workflow:**
 
 This template is maintained using a "reverse engineering" approach, driven by Claude Code skills (``.claude/skills/cctpl-*-cn``):
 
-1. Make changes in the Seed project (``cookiecutter_pywf_open_source_demo-project``)
+1. Make changes in the Seed project (``cookiecutter_aws_cdk-project``)
 2. Run ``mise run sync`` to convert the Seed into a template and check it
 3. Run ``mise run try-template`` to try a generated project locally
 4. Run ``/cctpl-release-cn`` to bump the version and update the changelog, then ``mise run publish-template`` to publish the template to GitHub

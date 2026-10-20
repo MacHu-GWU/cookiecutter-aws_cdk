@@ -233,19 +233,7 @@ wheels = [
 ]
 
 [[package]]
-name = "cookiecutter-maker"
-version = "1.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pathspec" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/20/c4/f9abf2d48084d091648934bd244357658fd984db73f866cac4c8148fea77/cookiecutter_maker-1.1.0.tar.gz", hash = "sha256:da38f26ef69800319e3482d0cc4084264d63c7a4160dd9cc8f9e3eccdc8d1929", size = 33559, upload-time = "2026-10-14T14:02:59.131Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/19/d2/2b0f1bb5e818a062a74344307bd6d0099179addee4a7707617f33b7b818b/cookiecutter_maker-1.1.0-py3-none-any.whl", hash = "sha256:8fecd70effaa75cae9dc542e05adc9e409d2d1e03fb251b054f0fd74f6b8548c", size = 27226, upload-time = "2026-10-14T14:03:00.142Z" },
-]
-
-[[package]]
-name = "cookiecutter-pywf-open-source"
+name = "cookiecutter-aws-cdk"
 version = "2.0.0"
 source = { virtual = "." }
 dependencies = [
@@ -263,6 +251,18 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.0,<4.0.0" },
     { name = "pathspec", specifier = ">=0.12.0,<2.0.0" },
     { name = "pygithub-mate", specifier = ">=0.1.1,<1.0.0" },
+]
+
+[[package]]
+name = "cookiecutter-maker"
+version = "1.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pathspec" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/20/c4/f9abf2d48084d091648934bd244357658fd984db73f866cac4c8148fea77/cookiecutter_maker-1.1.0.tar.gz", hash = "sha256:da38f26ef69800319e3482d0cc4084264d63c7a4160dd9cc8f9e3eccdc8d1929", size = 33559, upload-time = "2026-10-14T14:02:59.131Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/d2/2b0f1bb5e818a062a74344307bd6d0099179addee4a7707617f33b7b818b/cookiecutter_maker-1.1.0-py3-none-any.whl", hash = "sha256:8fecd70effaa75cae9dc542e05adc9e409d2d1e03fb251b054f0fd74f6b8548c", size = 27226, upload-time = "2026-10-14T14:03:00.142Z" },
 ]
 
 [[package]]

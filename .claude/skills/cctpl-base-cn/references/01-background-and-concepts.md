@@ -64,9 +64,9 @@ cctpl 家族的作用就是让 AI agent 承担这部分成本: 把流程写成�
 
 | 对象 | 命名 | 例子 |
 | :--- | :--- | :--- |
-| tpl repo | `cookiecutter-<name>` | `cookiecutter-pywf_open_source` |
-| seed repo | `cookiecutter_<name>_demo-project` 或 `cookiecutter_<name>_template-project` | `cookiecutter_pywf_open_source_demo-project` |
-| seed 的包名 | seed repo 去掉 `-project` 后缀 | `cookiecutter_pywf_open_source_demo` |
+| tpl repo | `cookiecutter-<name>` | `cookiecutter-aws_cdk` |
+| seed repo | `cookiecutter_<name>_demo-project` 或 `cookiecutter_<name>_template-project` | `cookiecutter_aws_cdk-project` |
+| seed 的包名 | seed repo 去掉 `-project` 后缀 | `cookiecutter_aws_cdk` |
 | preset 分支 | `preset/<name>` | `preset/sanhe` |
 
 seed 的包名, 仓库名都有独立的命名空间, 所以它们作为 seed value 被替换时不会和项目中的其他字符串冲突. 这是选择这种命名的主要原因.

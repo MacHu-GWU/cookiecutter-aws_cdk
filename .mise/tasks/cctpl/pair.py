@@ -13,7 +13,7 @@ Where every pair-specific fact lives:
 
 # --- GitHub coordinates of the tpl repo (publish, verify, README)
 GITHUB_OWNER = "MacHu-GWU"
-GITHUB_REPO = "cookiecutter-pywf_open_source"
+GITHUB_REPO = "cookiecutter-aws_cdk"
 
 # --- the template dir: the project folder name inside the template
 TEMPLATE_DIR_NAME = "{{ cookiecutter.package_name }}-project"

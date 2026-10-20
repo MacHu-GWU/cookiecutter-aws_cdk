@@ -33,7 +33,7 @@ class SeedValues:
     """Concrete values in the seed repo that become cookiecutter variables."""
 
     # --- identity
-    package_name = "cookiecutter_pywf_open_source_demo"
+    package_name = "cookiecutter_aws_cdk"
     package_name_slug = "cookiecutter-pywf-open-source-demo"
     github_username = "MacHu-GWU"
     # Not a parameter: only scanned for leaks (UNIQUE_SEED_VALUES).

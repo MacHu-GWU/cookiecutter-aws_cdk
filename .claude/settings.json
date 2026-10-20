@@ -3,7 +3,7 @@
     "permissions": {
         "defaultMode": "auto",
         "additionalDirectories": [
-            "../cookiecutter_pywf_open_source_demo-project"
+            "../cookiecutter_aws_cdk-project"
         ],
         "deny": [
             "Bash(git add *)",
@@ -104,7 +104,7 @@
             "Edit(./**/*.md)",
             "Edit(./README.md)",
             "Edit(./CLAUDE.md)",
-            "Edit(cookiecutter_pywf_open_source_demo/**/*.py)",
+            "Edit(cookiecutter_aws_cdk/**/*.py)",
             "Edit(tests/**/*.py)",
             "Edit(scripts/**/*.py)",
             "Read(========== Bash Section ==========)",

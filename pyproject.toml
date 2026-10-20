@@ -6,7 +6,7 @@
 # Spec: .claude/skills/cctpl-base-cn/references/08-versioning-and-release.md
 # ==============================================================================
 [project]
-name = "cookiecutter_pywf_open_source"
+name = "cookiecutter_aws_cdk"
 # The tpl version. This is its only source: `mise run sync` writes it into
 # cookiecutter.json (_template_version) and README.rst. Re-run sync after a bump.
 version = "2.0.0"
@@ -32,10 +32,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/MacHu-GWU/cookiecutter-pywf_open_source"
-Repository = "https://github.com/MacHu-GWU/cookiecutter-pywf_open_source"
-Issues = "https://github.com/MacHu-GWU/cookiecutter-pywf_open_source/issues"
-Changelog = "https://github.com/MacHu-GWU/cookiecutter-pywf_open_source/blob/main/release-history.rst"
+Homepage = "https://github.com/MacHu-GWU/cookiecutter-aws_cdk"
+Repository = "https://github.com/MacHu-GWU/cookiecutter-aws_cdk"
+Issues = "https://github.com/MacHu-GWU/cookiecutter-aws_cdk/issues"
+Changelog = "https://github.com/MacHu-GWU/cookiecutter-aws_cdk/blob/main/release-history.rst"
 
 [tool.uv]
 # Only a virtual environment for the scripts; never build or install this repo.
