@@ -4,7 +4,7 @@
 # without the secret (publish-template fails early if it is empty).
 GITHUB_TOKEN = "{{ exec(command='uvx --from home-secret-toml hst get github.accounts.sh.users.sh.secrets.dev.value || true') }}"
 # The seed repo this template is made from. Keep in sync with permissions.additionalDirectories in .claude/settings.json
-CCTPL_SEED_DIR = "{{env.HOME}}/Documents/GitHub/cookiecutter_aws_cdk-project"
+CCTPL_SEED_DIR = "{{env.HOME}}/Documents/GitHub/cookiecutter_aws_cdk_demo-project"
 
 [tools]
 python = "3.12"

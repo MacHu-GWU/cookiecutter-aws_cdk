@@ -1,0 +1,45 @@
+{
+    "package_name": "your_package_name",
+    "github_username": "your_github_username",
+    "license": [
+        "MIT",
+        "AGPL-3.0-or-later",
+        "LicenseRef-Proprietary"
+    ],
+    "author": "Firstname Lastname",
+    "author_email": "firstname.lastname@email.com",
+    "version": "0.1.1",
+    "dev_python_version": "3.12",
+    "aws_region": "us-east-1",
+    "github_token_field": "your_github_token_field",
+    "codecov_token_field": "your_codecov_token_field",
+    "readthedocs_token_field": "your_readthedocs_token_field",
+    "pypi_token_field": "your_pypi_token_field",
+    "_template_version": "0.1.1",
+    "__prompts__": {
+        "package_name": "Your Python package name, in snake case (e.g. my_package)",
+        "github_username": "Your GitHub username, the owner of the new repo",
+        "license": "Pick a license, as an SPDX expression for pyproject.toml, see https://choosealicense.com/ for details",
+        "author": "Author name for pyproject.toml",
+        "author_email": "Author email for pyproject.toml",
+        "version": "Semantic Version, in {major}.{minor}.{micro} (e.g. 0.1.1)",
+        "dev_python_version": "Python version for local development, in {major}.{minor} (e.g. 3.12)",
+        "aws_region": "AWS region every environment (dev, tst, prd) deploys to (e.g. us-east-1)",
+        "github_token_field": "GitHub token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml",
+        "codecov_token_field": "Codecov.io token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml",
+        "readthedocs_token_field": "Readthedocs.org token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml",
+        "pypi_token_field": "PyPI token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml"
+    },
+    "_copy_without_render": [
+        "docs/source/_static/{{ cookiecutter.package_name }}-favicon.ico",
+        "docs/source/_static/{{ cookiecutter.package_name }}-logo.png",
+        "requirements-dev.txt",
+        "requirements-doc.txt",
+        "requirements-mise.txt",
+        "requirements-test.txt",
+        "requirements.txt",
+        "{{ cookiecutter.package_name }}/vendor/__init__.py",
+        "{{ cookiecutter.package_name }}/vendor/pytest_cov_helper.py"
+    ],
+    "_new_lines": "\n"
+}

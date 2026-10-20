@@ -9,8 +9,8 @@
 name = "cookiecutter_aws_cdk"
 # The tpl version. This is its only source: `mise run sync` writes it into
 # cookiecutter.json (_template_version) and README.rst. Re-run sync after a bump.
-version = "2.0.0"
-description = "Cookiecutter template for Python open source library projects"
+version = "0.1.1"
+description = "Cookiecutter template for multi-environment AWS CDK projects in Python"
 license = "MIT"
 license-files = ["LICENSE.txt", "AUTHORS.rst"]
 authors = [

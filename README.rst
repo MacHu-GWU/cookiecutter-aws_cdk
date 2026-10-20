@@ -14,15 +14,16 @@
 
 Overview
 ------------------------------------------------------------------------------
-This template provides a ready-to-use structure for Python open source library projects. It generates a complete development environment that allows you to start coding immediately and publish to `PyPI <https://pypi.org/>`_ with minimal setup.
+This template provides a ready-to-use structure for a Python code base that manages several `AWS CDK <https://docs.aws.amazon.com/cdk/>`_ stacks across several environments (``dev``, ``tst``, ``prd``), built on `cdk_mate <https://github.com/MacHu-GWU/cdk_mate-project>`_. It generates a complete development environment that allows you to define, test, and deploy stacks immediately.
 
 **Key Features:**
 
-- **Modern tooling**: Uses `mise-en-place <https://mise.jdx.dev/>`_ for task management and `uv <https://docs.astral.sh/uv/>`_ for fast Python package management
-- **Complete CI/CD**: Pre-configured GitHub Actions, CodeCov, and ReadTheDocs integration
-- **Developer-friendly**: Simple commands like ``mise run test`` or ``mise run cov`` replace complex pytest invocations
-- **Documentation ready**: Sphinx documentation setup with auto-generation scripts
-- **AI ready**: Ships Claude Code skills that know the project's toolchain and workflows
+- **Multi-environment config**: One JSON5 file per environment plus git-ignored secret files, loaded into a typed config from which every AWS resource name derives
+- **Stacks as code**: Two sample stacks (``alerts``, ``publisher``) with stack exports, synth-only unit tests (no AWS call), and integration tests against deployed stacks
+- **One command per stack**: Generated ``mise run cdk-<synth|plan|up|down>-<env>-<stack>-stack`` tasks that print the CloudFormation console URL, then run one plain cdk command
+- **Modern tooling**: Uses `mise-en-place <https://mise.jdx.dev/>`_ for tools (Python, Node.js, the cdk CLI, AWS CLI) and tasks, and `uv <https://docs.astral.sh/uv/>`_ for fast Python package management
+- **Complete CI/CD**: Pre-configured GitHub Actions, CodeCov, and ReadTheDocs integration, plus Sphinx documentation
+- **AI ready**: Ships Claude Code skills that know the project's toolchain, its CDK conventions, and workflows
 
 
 Disclaimer
@@ -44,33 +45,34 @@ To use a specific released version (see the `full list of releases <https://gith
 
     cookiecutter https://github.com/MacHu-GWU/cookiecutter-aws_cdk --checkout tags/${version}
 
-For example, to use ``2.0.0``, the latest version:
+For example, to use ``0.1.1``, the latest version:
 
 .. code-block:: bash
 
-    cookiecutter https://github.com/MacHu-GWU/cookiecutter-aws_cdk --checkout tags/2.0.0
+    cookiecutter https://github.com/MacHu-GWU/cookiecutter-aws_cdk --checkout tags/0.1.1
 
 You'll then be prompted to provide the following information (defaults in parentheses):
 
 .. code-block:: bash
 
-    [1/11] Your Python package name, in snake case (e.g. my_package) (your_package_name): your_package_name
-    [2/11] Your GitHub username, the owner of the new repo (your_github_username): your_github_username
-    [3/11] Pick a license, as an SPDX expression for pyproject.toml, see https://choosealicense.com/ for details
+    [1/12] Your Python package name, in snake case (e.g. my_package) (your_package_name): your_package_name
+    [2/12] Your GitHub username, the owner of the new repo (your_github_username): your_github_username
+    [3/12] Pick a license, as an SPDX expression for pyproject.toml, see https://choosealicense.com/ for details
       1 - MIT
       2 - AGPL-3.0-or-later
       3 - LicenseRef-Proprietary
       Choose from [1/2/3] (1): 1
-    [4/11] Author name for pyproject.toml (Firstname Lastname): Firstname Lastname
-    [5/11] Author email for pyproject.toml (firstname.lastname@email.com): firstname.lastname@email.com
-    [6/11] Semantic Version, in {major}.{minor}.{micro} (e.g. 0.1.1) (0.1.1): 0.1.1
-    [7/11] Python version for local development, in {major}.{minor} (e.g. 3.12) (3.12): 3.12
-    [8/11] GitHub token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_github_token_field): your_github_token_field
-    [9/11] Codecov.io token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_codecov_token_field): your_codecov_token_field
-    [10/11] Readthedocs.org token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_readthedocs_token_field): your_readthedocs_token_field
-    [11/11] PyPI token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_pypi_token_field): your_pypi_token_field
+    [4/12] Author name for pyproject.toml (Firstname Lastname): Firstname Lastname
+    [5/12] Author email for pyproject.toml (firstname.lastname@email.com): firstname.lastname@email.com
+    [6/12] Semantic Version, in {major}.{minor}.{micro} (e.g. 0.1.1) (0.1.1): 0.1.1
+    [7/12] Python version for local development, in {major}.{minor} (e.g. 3.12) (3.12): 3.12
+    [8/12] AWS region every environment (dev, tst, prd) deploys to (e.g. us-east-1) (us-east-1): us-east-1
+    [9/12] GitHub token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_github_token_field): your_github_token_field
+    [10/12] Codecov.io token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_codecov_token_field): your_codecov_token_field
+    [11/12] Readthedocs.org token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_readthedocs_token_field): your_readthedocs_token_field
+    [12/12] PyPI token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_pypi_token_field): your_pypi_token_field
 
-This will generate a repository structure similar to `cookiecutter_aws_cdk-project <https://github.com/MacHu-GWU/cookiecutter_aws_cdk-project>`_.
+This will generate a repository structure similar to `cookiecutter_aws_cdk_demo-project <https://github.com/MacHu-GWU/cookiecutter_aws_cdk_demo-project>`_.
 
 Once generated, navigate to your project directory and explore the available automation tasks:
 
@@ -84,14 +86,14 @@ Project Maintainer Note
 ------------------------------------------------------------------------------
 **Project Architecture:**
 
-- **Seed Repository**: `cookiecutter_aws_cdk-project <https://github.com/MacHu-GWU/cookiecutter_aws_cdk-project>`_ - A concrete, runnable project used as the source for template generation
+- **Seed Repository**: `cookiecutter_aws_cdk_demo-project <https://github.com/MacHu-GWU/cookiecutter_aws_cdk_demo-project>`_ - A concrete, runnable project used as the source for template generation
 - **Cookiecutter Template**: `cookiecutter-aws_cdk <https://github.com/MacHu-GWU/cookiecutter-aws_cdk>`_ - This repository
 
 **Maintenance Workflow:**
 
 This template is maintained using a "reverse engineering" approach, driven by Claude Code skills (``.claude/skills/cctpl-*-cn``):
 
-1. Make changes in the Seed project (``cookiecutter_aws_cdk-project``)
+1. Make changes in the Seed project (``cookiecutter_aws_cdk_demo-project``)
 2. Run ``mise run sync`` to convert the Seed into a template and check it
 3. Run ``mise run try-template`` to try a generated project locally
 4. Run ``/cctpl-release-cn`` to bump the version and update the changelog, then ``mise run publish-template`` to publish the template to GitHub

@@ -14,15 +14,16 @@
 
 Overview
 ------------------------------------------------------------------------------
-This template provides a ready-to-use structure for Python open source library projects. It generates a complete development environment that allows you to start coding immediately and publish to `PyPI <https://pypi.org/>`_ with minimal setup.
+This template provides a ready-to-use structure for a Python code base that manages several `AWS CDK <https://docs.aws.amazon.com/cdk/>`_ stacks across several environments (``dev``, ``tst``, ``prd``), built on `cdk_mate <https://github.com/MacHu-GWU/cdk_mate-project>`_. It generates a complete development environment that allows you to define, test, and deploy stacks immediately.
 
 **Key Features:**
 
-- **Modern tooling**: Uses `mise-en-place <https://mise.jdx.dev/>`_ for task management and `uv <https://docs.astral.sh/uv/>`_ for fast Python package management
-- **Complete CI/CD**: Pre-configured GitHub Actions, CodeCov, and ReadTheDocs integration
-- **Developer-friendly**: Simple commands like ``mise run test`` or ``mise run cov`` replace complex pytest invocations
-- **Documentation ready**: Sphinx documentation setup with auto-generation scripts
-- **AI ready**: Ships Claude Code skills that know the project's toolchain and workflows
+- **Multi-environment config**: One JSON5 file per environment plus git-ignored secret files, loaded into a typed config from which every AWS resource name derives
+- **Stacks as code**: Two sample stacks (``alerts``, ``publisher``) with stack exports, synth-only unit tests (no AWS call), and integration tests against deployed stacks
+- **One command per stack**: Generated ``mise run cdk-<synth|plan|up|down>-<env>-<stack>-stack`` tasks that print the CloudFormation console URL, then run one plain cdk command
+- **Modern tooling**: Uses `mise-en-place <https://mise.jdx.dev/>`_ for tools (Python, Node.js, the cdk CLI, AWS CLI) and tasks, and `uv <https://docs.astral.sh/uv/>`_ for fast Python package management
+- **Complete CI/CD**: Pre-configured GitHub Actions, CodeCov, and ReadTheDocs integration, plus Sphinx documentation
+- **AI ready**: Ships Claude Code skills that know the project's toolchain, its CDK conventions, and workflows
 
 
 Disclaimer

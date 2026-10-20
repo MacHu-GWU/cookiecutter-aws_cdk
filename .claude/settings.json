@@ -3,7 +3,7 @@
     "permissions": {
         "defaultMode": "auto",
         "additionalDirectories": [
-            "../cookiecutter_aws_cdk-project"
+            "../cookiecutter_aws_cdk_demo-project"
         ],
         "deny": [
             "Bash(git add *)",
@@ -71,6 +71,19 @@
             "Bash(mise run all*)",
             "Bash(mise r all*)",
             "Bash(mise all*)",
+            "Bash(mise run cdk-up-*)",
+            "Bash(mise r cdk-up-*)",
+            "Bash(mise cdk-up-*)",
+            "Bash(mise run cdk-down-*)",
+            "Bash(mise r cdk-down-*)",
+            "Bash(mise cdk-down-*)",
+            "Bash(mise run cdk-plan-*)",
+            "Bash(mise r cdk-plan-*)",
+            "Bash(mise cdk-plan-*)",
+            "Bash(cdk deploy*)",
+            "Bash(cdk destroy*)",
+            "Bash(* cdk deploy*)",
+            "Bash(* cdk destroy*)",
             "Bash(*publish_template.py*)",
             "Bash(uv publish*)",
             "Bash(*twine upload*)",
@@ -104,7 +117,7 @@
             "Edit(./**/*.md)",
             "Edit(./README.md)",
             "Edit(./CLAUDE.md)",
-            "Edit(cookiecutter_aws_cdk/**/*.py)",
+            "Edit(cookiecutter_aws_cdk_demo/**/*.py)",
             "Edit(tests/**/*.py)",
             "Edit(scripts/**/*.py)",
             "Read(========== Bash Section ==========)",

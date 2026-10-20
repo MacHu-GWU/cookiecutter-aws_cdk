@@ -9,6 +9,7 @@ Output: ``tmp/cctpl/template/``, a complete cookiecutter template root.
 Rules: ``.claude/skills/cctpl-base-cn/references/03-parameterization.md``.
 """
 
+import re
 import sys
 import json
 import tomllib
@@ -28,13 +29,25 @@ with open(dir_seed / "pyproject.toml", "rb") as f:
 with open(dir_seed / "mise.toml", "rb") as f:
     _mise_config = tomllib.load(f)
 
+# Every environment of the seed deploys to the same region; it becomes one variable.
+_ENV_CONFIG_FILES = [
+    "config/config-dev.json5",
+    "config/config-tst.json5",
+    "config/config-prd.json5",
+]
+_aws_regions = {
+    re.search(r'aws_region: "([^"]+)"', (dir_seed / path).read_text(encoding="utf-8")).group(1)
+    for path in _ENV_CONFIG_FILES
+}
+assert len(_aws_regions) == 1, f"Every config-<env>.json5 must use one aws_region: {_aws_regions}"
+
 
 class SeedValues:
     """Concrete values in the seed repo that become cookiecutter variables."""
 
     # --- identity
-    package_name = "cookiecutter_aws_cdk"
-    package_name_slug = "cookiecutter-pywf-open-source-demo"
+    package_name = "cookiecutter_aws_cdk_demo"
+    package_name_slug = "cookiecutter-aws-cdk-demo"
     github_username = "MacHu-GWU"
     # Not a parameter: only scanned for leaks (UNIQUE_SEED_VALUES).
     pypi_username = "machugwu"
@@ -49,6 +62,9 @@ class SeedValues:
     # --- versioning (read from the seed)
     version = _pyproject["project"]["version"]
     dev_python_version = _mise_config["tools"]["python"]
+
+    # --- AWS (read from the seed)
+    aws_region = _aws_regions.pop()
 
     # --- secret token fields
     github_token_field = "github.accounts.sh.users.sh.secrets.dev.value"
@@ -67,12 +83,48 @@ _HOME_SECRET_HELP = (
     "set up your tokens using home_secret.toml"
 )
 
+# Files that link to the seed repo on GitHub as the reference implementation,
+# such as ``github.com/MacHu-GWU/cookiecutter_aws_cdk_demo-project/blob/0.1.1/...``.
+# The links must keep pointing at the seed, so package_name and github_username
+# leave them alone.
+_SEED_LINK_FILES = [
+    ".claude/skills/pywf-aws-cdk-base/SKILL.md",
+    ".claude/skills/pywf-aws-cdk-base/references/01-project-layout.md",
+    ".claude/skills/pywf-aws-cdk-base/references/02-runtime.md",
+    ".claude/skills/pywf-aws-cdk-base/references/03-env.md",
+    ".claude/skills/pywf-aws-cdk-base/references/04-config-model.md",
+    ".claude/skills/pywf-aws-cdk-base/references/05-config-names.md",
+    ".claude/skills/pywf-aws-cdk-base/references/06-boto-session.md",
+    ".claude/skills/pywf-aws-cdk-base/references/07-config-load.md",
+    ".claude/skills/pywf-aws-cdk-base/references/08-one-singleton.md",
+    ".claude/skills/pywf-aws-cdk-base/references/09-cdk-layout.md",
+    ".claude/skills/pywf-aws-cdk-base/references/10-cdk-stack-enums.md",
+    ".claude/skills/pywf-aws-cdk-base/references/11-cdk-stack-exports.md",
+    ".claude/skills/pywf-aws-cdk-base/references/12-cdk-mise-tasks.md",
+    ".claude/skills/pywf-aws-cdk-base/references/13-cdk-tests.md",
+]
+
+# Files that only mention the maintainer's own projects (plugin marketplace,
+# home_secret_toml, docfly, cdk_mate) and the template author's bio.
+_MAINTAINER_LINK_FILES = [
+    ".claude/settings.local.json.example",
+    ".claude/skills/pypi-cdk_mate/SKILL.md",
+    ".claude/skills/pypi-cdk_mate/ref/best-practices.md",
+    ".claude/skills/pypi-cdk_mate/ref/public-api.md",
+    ".claude/skills/pywf-oss-base/references/01-secrets.md",
+    ".claude/skills/pywf-oss-base/references/14-docfly.md",
+]
+
 PARAMETERS = [
+    # Also the config's project_name (config/config-shared.json5), from which
+    # every AWS resource name derives, such as the stack names in the
+    # generated <cdk-stack-tasks> block of mise.toml (package_name_slug).
     Parameter(
         selector=[SeedValues.package_name],
         name="package_name",
         default="your_package_name",
         prompt="Your Python package name, in snake case (e.g. my_package)",
+        exclude=_SEED_LINK_FILES,
     ),
     Parameter(
         selector=[SeedValues.package_name_slug],
@@ -80,21 +132,14 @@ PARAMETERS = [
         custom_placeholder="{{ cookiecutter.package_name | slugify }}",
         in_cookiecutter_json=False,
     ),
-    # The seed also links to the maintainer's own projects (plugin marketplace,
-    # home_secret_toml, docfly) and credits the template's author in
-    # AUTHORS.rst. Those must stay literal, so the files that only mention them
-    # are excluded from this parameter.
+    # The seed also links to itself, to the maintainer's own projects, and
+    # credits the template's author in AUTHORS.rst. Those must stay literal.
     Parameter(
         selector=[SeedValues.github_username],
         name="github_username",
         default="your_github_username",
         prompt="Your GitHub username, the owner of the new repo",
-        exclude=[
-            ".claude/settings.local.json.example",
-            ".claude/skills/pywf-oss-base/references/01-secrets.md",
-            ".claude/skills/pywf-oss-base/references/14-docfly.md",
-            "AUTHORS.rst",
-        ],
+        exclude=[*_SEED_LINK_FILES, *_MAINTAINER_LINK_FILES, "AUTHORS.rst"],
     ),
     # Generic value: only the project license field in pyproject.toml.
     # That field is an SPDX expression (PEP 639) and setuptools refuses to
@@ -139,6 +184,27 @@ PARAMETERS = [
         default=SeedValues.dev_python_version,
         prompt=f"Python version for local development, in {{major}}.{{minor}} (e.g. {SeedValues.dev_python_version})",
         include=["mise.toml"],
+    ),
+    # Generic value: only the aws_region field of each environment's config
+    # (config/example/ keeps its placeholder) ...
+    Parameter(
+        selector=[f'aws_region: "{SeedValues.aws_region}"', SeedValues.aws_region],
+        name="aws_region",
+        default=SeedValues.aws_region,
+        prompt=f"AWS region every environment (dev, tst, prd) deploys to (e.g. {SeedValues.aws_region})",
+        include=_ENV_CONFIG_FILES,
+    ),
+    # ... and the console URLs in the <cdk-stack-tasks> block of mise.toml,
+    # generated from that config (the seed's test_mise_toml_is_up_to_date
+    # fails if the two disagree).
+    Parameter(
+        selector=[
+            f"https://{SeedValues.aws_region}.console.aws.amazon.com/cloudformation/home?region={SeedValues.aws_region}",
+            SeedValues.aws_region,
+        ],
+        name="aws_region",
+        include=["mise.toml"],
+        in_cookiecutter_json=False,
     ),
     Parameter(
         selector=[SeedValues.github_token_field],
@@ -200,7 +266,7 @@ HOOK_OUTPUTS = [
 
 # Seed values unique enough that any occurrence left in the template is a
 # leak, scanned by check-seed-values. Generic values (license, version,
-# dev_python_version) also appear legitimately elsewhere; check-roundtrip
+# dev_python_version, aws_region) also appear legitimately elsewhere; check-roundtrip
 # verifies them instead.
 UNIQUE_SEED_VALUES = {
     "package_name": SeedValues.package_name,
@@ -215,15 +281,16 @@ UNIQUE_SEED_VALUES = {
     "pypi_token_field": SeedValues.pypi_token_field,
 }
 
+_SEED_LINK = "links to the seed repo as the reference implementation, must stay literal"
 _MAINTAINER_LINK = "links to the maintainer's own project, must stay literal"
 _TEMPLATE_AUTHOR = "credits the template's author, not the generated project's"
 
 # Unique seed values that may legally remain in the template, consumed by
 # check-seed-values. Each entry: (seed value name, template-relative file, reason).
 LEGAL_RESIDUES: list[tuple[str, str, str]] = [
-    ("github_username", ".claude/settings.local.json.example", _MAINTAINER_LINK),
-    ("github_username", ".claude/skills/pywf-oss-base/references/01-secrets.md", _MAINTAINER_LINK),
-    ("github_username", ".claude/skills/pywf-oss-base/references/14-docfly.md", _MAINTAINER_LINK),
+    *[("package_name", path, _SEED_LINK) for path in _SEED_LINK_FILES],
+    *[("github_username", path, _SEED_LINK) for path in _SEED_LINK_FILES],
+    *[("github_username", path, _MAINTAINER_LINK) for path in _MAINTAINER_LINK_FILES],
     ("github_username", "AUTHORS.rst", _TEMPLATE_AUTHOR),
     ("pypi_username", "AUTHORS.rst", _TEMPLATE_AUTHOR),
     ("author", "AUTHORS.rst", _TEMPLATE_AUTHOR),

@@ -8,7 +8,7 @@
 **agent 只做本地的, 可撤回的事. 凡是写入 git 历史, 或改动任何远端的事, 都由人执行.**
 
 - 本地文件改动: 可以用 `git diff` 查看, 用 `git restore` 撤回, 或重新生成. agent 可以做.
-- git 历史和远端 (GitHub, PyPI, Read the Docs, Codecov): 一旦写入, 撤回代价高, 或者对其他人已经可见. agent 只打印命令.
+- git 历史和远端 (GitHub, PyPI, Read the Docs, Codecov, 云服务商账号中的资源): 一旦写入, 撤回代价高, 或者对其他人已经可见. agent 只打印命令.
 
 这条规则不因会话中的要求而放宽. 即使在对话中被要求 "直接帮我 push", agent 仍然只打印命令. 需要放宽时, 由人修改 settings, 而不是由 agent 判断.
 
@@ -35,7 +35,7 @@ tpl repo 中的每个 mise task 都按上述原则标注一个安全级别:
 | 运行 A 级 task | 可以 | 级别定义见上文 Safety Levels |
 | 运行 U 级 task | **只打印** | |
 | 运行 seed 自己的本地 task (安装, 测试, 构建文档) | 可以 | |
-| 运行 seed 自己的远端 task (发布到 PyPI, 创建 release, 配置 Codecov / Read the Docs, 修改 GitHub 元数据) | **只打印** | |
+| 运行 seed 自己的远端 task (发布到 PyPI, 创建 release, 配置 Codecov / Read the Docs, 修改 GitHub 元数据, 部署或销毁云资源, 例如 `cdk-up-*` / `cdk-down-*` / `cdk-plan-*` task 和 `cdk deploy` / `cdk destroy`) | **只打印** | 云资源 task 还依赖人自己的云账号凭证 |
 | 只读 git 命令 (`status`, `diff`, `log`, `show`, `branch --list`, `rev-parse`, `describe`, `ls-remote`) | 可以 | 两个仓库都适用 |
 | 改动 index, 工作区分支或历史的 git 命令 (`add`, `rm`, `mv`, `commit`, `push`, `pull`, `merge`, `tag`, `checkout` / `switch` 分支, `reset`, `rebase`, `cherry-pick`, `revert`, `am`, `stash`, `clean`, `update-ref`, `branch -d` / `-m`) | **只打印** | 两个仓库都适用 |
 | 只读 GitHub 查询 (例如查看 release, 拉取已发布模板) | 可以 | |

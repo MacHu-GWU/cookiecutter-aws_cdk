@@ -24,7 +24,9 @@ TEMPLATE_DIR_NAME = "{{ cookiecutter.package_name }}-project"
 PYTHON_VERSION_VARIABLE = "dev_python_version"
 
 # How L4 / L5 install a generated project and run its tests, without mise.
-# Run in the project dir after "uv venv --python <version>".
+# Run in the project dir after "uv venv --python <version>". The CDK synth
+# tests need a ``node`` on PATH (aws-cdk-lib runs on jsii), which mise provides
+# globally on the maintainer's machine; no AWS credentials are needed.
 INSTALL_COMMAND = ["uv", "sync", "--all-extras"]
 TEST_COMMAND = [".venv/bin/pytest", "tests", "-q"]
 
