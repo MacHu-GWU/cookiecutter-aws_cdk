@@ -11,6 +11,8 @@ omit =
     {{ cookiecutter.package_name }}/runtime.py
     # only testable against a deployed stack, see tests_int/
     {{ cookiecutter.package_name }}/cdk/stacks/*_stack_exports.py
+    # dev tooling; tests/cdk/test_cdk_mise_tasks.py only checks mise.toml is current
+    {{ cookiecutter.package_name }}/cdk/mise_tasks.py
 
 [report]
 # Regexes for lines to exclude from consideration
