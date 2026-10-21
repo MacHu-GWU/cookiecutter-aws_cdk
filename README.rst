@@ -55,21 +55,24 @@ You'll then be prompted to provide the following information (defaults in parent
 
 .. code-block:: bash
 
-    [1/11] Your Python package name, in snake case (e.g. my_package) (your_package_name): your_package_name
-    [2/11] Your GitHub username, the owner of the new repo (your_github_username): your_github_username
-    [3/11] Pick a license, as an SPDX expression for pyproject.toml, see https://choosealicense.com/ for details
+    [1/14] Your Python package name, in snake case (e.g. my_package) (your_package_name): your_package_name
+    [2/14] Your GitHub username, the owner of the new repo (your_github_username): your_github_username
+    [3/14] Pick a license, as an SPDX expression for pyproject.toml, see https://choosealicense.com/ for details
       1 - MIT
       2 - AGPL-3.0-or-later
       3 - LicenseRef-Proprietary
       Choose from [1/2/3] (1): 1
-    [4/11] Author name for pyproject.toml (Firstname Lastname): Firstname Lastname
-    [5/11] Author email for pyproject.toml (firstname.lastname@email.com): firstname.lastname@email.com
-    [6/11] Semantic Version, in {major}.{minor}.{micro} (e.g. 0.1.1) (0.1.1): 0.1.1
-    [7/11] Python version for local development, in {major}.{minor} (e.g. 3.12) (3.12): 3.12
-    [8/11] AWS region every environment (dev, tst, prd) deploys to (e.g. us-east-1) (us-east-1): us-east-1
-    [9/11] GitHub token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_github_token_field): your_github_token_field
-    [10/11] Codecov.io token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_codecov_token_field): your_codecov_token_field
-    [11/11] Readthedocs.org token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_readthedocs_token_field): your_readthedocs_token_field
+    [4/14] Author name for pyproject.toml (Firstname Lastname): Firstname Lastname
+    [5/14] Author email for pyproject.toml (firstname.lastname@email.com): firstname.lastname@email.com
+    [6/14] Semantic Version, in {major}.{minor}.{micro} (e.g. 0.1.1) (0.1.1): 0.1.1
+    [7/14] Python version for local development, in {major}.{minor} (e.g. 3.12) (3.12): 3.12
+    [8/14] AWS region every environment (dev, tst, prd) deploys to (e.g. us-east-1) (us-east-1): us-east-1
+    [9/14] GitHub token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_github_token_field): your_github_token_field
+    [10/14] Codecov.io token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_codecov_token_field): your_codecov_token_field
+    [11/14] Readthedocs.org token field. Read https://github.com/MacHu-GWU/home_secret_toml-project to learn how to set up your tokens using home_secret.toml (your_readthedocs_token_field): your_readthedocs_token_field
+    [12/14] AWS account id of the dev environment (123456789012): 123456789012
+    [13/14] AWS account id of the tst environment (123456789012): 123456789012
+    [14/14] AWS account id of the prd environment (123456789012): 123456789012
 
 This will generate a repository structure similar to `cookiecutter_aws_cdk_demo-project <https://github.com/MacHu-GWU/cookiecutter_aws_cdk_demo-project>`_.
 

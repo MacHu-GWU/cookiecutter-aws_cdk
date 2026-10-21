@@ -32,3 +32,4 @@ First release. Generates a multi-environment (``dev``, ``tst``, ``prd``) AWS CDK
 - Choose ``MIT``, ``AGPL-3.0-or-later``, or ``LicenseRef-Proprietary``; the post-generation hook writes the matching ``LICENSE.txt``.
 - Pick the AWS region every environment deploys to with ``aws_region``.
 - After generation, ``.env`` and the ``config/config-*-secret.json5`` files are copied from their examples, and next steps are printed.
+- Enter the AWS account id of each environment with ``dev_aws_account_id``, ``tst_aws_account_id`` and ``prd_aws_account_id``; the post-generation hook writes them into ``config/config-<env>-secret.json5``.
